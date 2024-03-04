@@ -14,10 +14,10 @@ datasource db {
 }
 
 model Student {
-  id Int @id @default(uuid())
-  name String
-  responsable_name String
+  id                 Int @id @default(autoincrement())
+  name               String
+  responsable_name   String
   responsable_number String
-  created_at DateTime @default(now())
-  updated_at Datetime @updatedAt
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
 }
