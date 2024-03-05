@@ -6,11 +6,16 @@
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
+    "@prisma/client": "5.10.2",
     "elysia": "latest",
     "prisma": "^5.10.2"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "ts-node": "^10.9.2"
   },
-  "module": "src/index.js"
+  "module": "src/index.js",
+  "prisma": {
+    "seed": "node ./prisma/seed.js"
+  }
 }
