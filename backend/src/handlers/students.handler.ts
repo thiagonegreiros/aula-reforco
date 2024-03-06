@@ -1,6 +1,7 @@
 import { Student } from "@prisma/client";
 import { CreateStudentDto } from "../dtos/students/createStudent.dto";
 import studentsRespository from "../repositories/students.respository";
+import { Context } from "elysia";
 
 export class StudentHandler {
   public async findAll() {
