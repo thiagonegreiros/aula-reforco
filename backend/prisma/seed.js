@@ -1,9 +1,10 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const { createStudentsSeed } = require("../src/seed/student");
+const { createSubjectsSeed } = require("../src/seed/subject");
+const { createUserSeed } = require("../src/seed/user");
 
 console.log("\n=== SEED DATABASE START ===\n");
-Promise.all([createStudentsSeed()])
+Promise.all([createSubjectsSeed(), createUserSeed()])
   .then(async () => {
     await prisma.$disconnect();
   })
