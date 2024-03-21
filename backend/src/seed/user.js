@@ -7,7 +7,11 @@ module.exports.createUserSeed = async function createUserSeed() {
 
   console.log("\n - Create User");
 
-  const password = await hash("123456");
+  const secret = "geoforce";
+  const password = crypto
+    .createHash("sha256", secret)
+    .update("123456")
+    .digest("hex");
 
   // Student
   await prisma.user.upsert({
@@ -54,19 +58,7 @@ module.exports.createUserSeed = async function createUserSeed() {
   });
 };
 
-async function hash(password) {
-  return new Promise((resolve, reject) => {
-    // generate random 16 bytes long salt
-    const salt = crypto.randomBytes(16).toString("hex");
-
-    crypto.scrypt(password, salt, 64, (err, derivedKey) => {
-      if (err) reject(err);
-      resolve(salt + ":" + derivedKey.toString("hex"));
-    });
-  });
-}
-
 async function destroy() {
-  await prisma.user.deleteMany({});
   await prisma.student.deleteMany({});
+  await prisma.user.deleteMany({});
 }
