@@ -35,8 +35,8 @@ export function Lesson() {
   ];
 
   return (
-    <View className="h-full bg-gray-500 flex-1 px-4 pb-4 pt-16">
-      <View className="mt-6">
+    <View className="h-full bg-gray-500 flex-1 px-4">
+      <View className="bg-gray-500 px-4 py-8 h-32">
         <User />
       </View>
       <FlatList

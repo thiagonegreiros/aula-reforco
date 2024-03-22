@@ -1,12 +1,12 @@
 import "@/styles/global.css";
 
 import { StatusBar } from "expo-status-bar";
-import { Notes } from "@/app/Notes";
+import Routes from "@/routes";
 
 export default function App() {
   return (
     <>
-      <Notes />
+      <Routes />
       <StatusBar style="light" />
     </>
   );
