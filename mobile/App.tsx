@@ -1,20 +1,13 @@
+import "@/styles/global.css";
+
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Profile } from "@/app/Profile";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Juarez levou um soco do Samuel</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <Profile />
+      <StatusBar style="light" />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
