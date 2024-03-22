@@ -3,8 +3,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "./Avatar";
 
 export function User() {
   return (
-    <View className="flex-row space-x-36">
-      <View className="items-center grow">
+    <View className="flex-row justify-between">
+      <View className="items-center">
         <Text className="text-white font-bold text-xl mt-4">
           Thiago Negreiros
         </Text>
