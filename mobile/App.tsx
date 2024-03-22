@@ -1,12 +1,12 @@
 import "@/styles/global.css";
 
 import { StatusBar } from "expo-status-bar";
-import { Profile } from "@/app/Profile";
+import { Lesson } from "@/app/Lesson";
 
 export default function App() {
   return (
     <>
-      <Profile />
+      <Lesson />
       <StatusBar style="light" />
     </>
   );

@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/Card";
 import { User } from "@/components/User";
 import { FlatList, Text, View } from "react-native";
 import { formatDate } from "@/utils/utils";
-export function Profile() {
+export function Lesson() {
   const DATA = [
     {
       id: 1,
