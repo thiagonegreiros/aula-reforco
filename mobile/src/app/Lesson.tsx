@@ -57,7 +57,7 @@ export function Lesson() {
             </CardFooter>
           </Card>
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
       />
     </View>
   );
