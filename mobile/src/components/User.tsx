@@ -5,7 +5,7 @@ export function User() {
   return (
     <View className="flex-row justify-between">
       <View className="items-center">
-        <Text className="text-white font-bold text-xl mt-4">
+        <Text className="text-gray-500 font-bold text-xl mt-4">
           Thiago Negreiros
         </Text>
         <Text className="text-gray-400 text-xs">

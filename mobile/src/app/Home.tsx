@@ -20,7 +20,7 @@ export function Home() {
             icon="message-square"
           />
           <Menu title="Agendamento" icon="calendar" />
-          <Menu title="Preferências" icon="settings" />
+          <Menu title="Preferências" navigate="profile" icon="settings" />
           <Menu title="Frequência" icon="check-square" />
         </View>
       </View>
