@@ -1,5 +1,5 @@
 import { type VariantProps, cva } from "class-variance-authority";
-import { Image, ImageProps, Text, View } from "react-native";
+import { ImageProps, Text, View } from "react-native";
 
 import { cn } from "../lib/utils";
 
