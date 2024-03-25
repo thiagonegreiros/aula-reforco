@@ -11,7 +11,7 @@ export function DrawnRoutes() {
     <Drawer.Navigator
       initialRouteName="index"
       screenOptions={{
-        title: "",
+        title: "Cantinho da Geo",
         headerStyle: { backgroundColor: "#F29D52" },
         headerTintColor: "#fff",
       }}
