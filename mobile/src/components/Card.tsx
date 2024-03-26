@@ -7,10 +7,7 @@ function Card({
   ...props
 }: React.ComponentPropsWithoutRef<typeof View>) {
   return (
-    <View
-      className={cn("rounded-xl border border-border", className)}
-      {...props}
-    />
+    <View className={cn("rounded-xl border-border", className)} {...props} />
   );
 }
 

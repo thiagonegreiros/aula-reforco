@@ -19,7 +19,7 @@ export function Home() {
             navigate="index"
             icon="message-square"
           />
-          <Menu title="Agendamento" icon="calendar" />
+          <Menu title="Agendamento" navigate="schedule" icon="calendar" />
           <Menu title="Preferências" navigate="profile" icon="settings" />
           <Menu title="Frequência" icon="check-square" />
         </View>
