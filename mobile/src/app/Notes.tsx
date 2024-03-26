@@ -23,7 +23,7 @@ export function Notes() {
   ];
 
   return (
-    <View className="h-full bg-gray-500 px-4">
+    <View className="h-full px-4">
       <View className="mt-6">
         <User />
       </View>
@@ -31,7 +31,7 @@ export function Notes() {
       <FlatList
         data={DATA}
         renderItem={({ item }) => (
-          <Card className="bg-white mt-4">
+          <Card className="bg-white bg-gray-200 mt-4">
             <CardHeader>
               <CardTitle className="text-xl">{item.created_at}</CardTitle>
             </CardHeader>

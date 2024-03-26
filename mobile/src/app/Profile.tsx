@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { User } from "@/components/User";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
