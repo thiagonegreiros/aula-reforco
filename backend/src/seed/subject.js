@@ -3,43 +3,39 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 module.exports.createSubjectsSeed = async function createSubjectsSeed() {
-    await destroy();
+  await destroy();
 
-    console.log("\n - Create Subjects");
+  console.log("\n - Create Lesson");
 
-    const createSubject = [
-        {
-            name: "Matemática",
-            description: "Matemática",
+  const createSubject = [
+    {
+      name: "Matemática",
+      description: "Matemática",
+    },
+    {
+      name: "Portuguẽs",
+      description: "Portuguẽs",
+    },
+    {
+      name: "Geografia",
+      description: "Geografia",
+    },
+    {
+      name: "Ciência",
+      description: "Ciência",
+    },
+    {
+      name: "Física",
+      description: "Física",
+    },
+  ];
 
-        },
-        {
-            name: "Portuguẽs",
-            description: "Portuguẽs",
-
-        },
-        {
-            name: "Geografia",
-            description: "Geografia",
-
-        },
-        {
-            name: "Ciência",
-            description: "Ciência",
-
-        },
-        {
-            name: "Física",
-            description: "Física",
-
-        },
-    ];
-
-    await prisma.subjects.createMany({
-        data: createSubject,
-    });
+  await prisma.subjects.createMany({
+    data: createSubject,
+  });
 };
 
 async function destroy() {
-    await prisma.subjects.deleteMany({});
+  await prisma.subjects.deleteMany({});
 }
+

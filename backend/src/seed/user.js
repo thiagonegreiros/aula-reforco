@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 module.exports.createUserSeed = async function createUserSeed() {
   await destroy();
 
-  console.log("\n - Create User");
+  console.log("\n - Create User/Student");
 
   const secret = "geoforce";
   const password = crypto
@@ -60,5 +60,6 @@ module.exports.createUserSeed = async function createUserSeed() {
 
 async function destroy() {
   await prisma.student.deleteMany({});
+  await prisma.notes.deleteMany({});
   await prisma.user.deleteMany({});
 }

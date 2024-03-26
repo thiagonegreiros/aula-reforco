@@ -1,37 +1,35 @@
-const { PrismaClient, Role } = require("@prisma/client");
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-module.exports.createUserSeed = async function createUserSeed() {
+module.exports.createNotesSeed = async function createNotesSeed() {
   await destroy();
 
-  console.log("\n - Create User");
+  console.log("\n - Create Note");
 
   const getUser = await prisma.user.findUnique({
     where: { email: "douglas@gmail.com" },
   });
 
-  await prisma.user.create({
-    data: {
-      born_date: new Date("1980-04-01 09:00:00"),
-      email: "geo@gmail.com",
-      name: "Geo",
-      password,
-      role: Role.TEACHER,
+  const data = [
+    {
+      note: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.",
+      id_user_notes: getUser.id,
     },
-  });
+    {
+      note: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.",
+      id_user_notes: getUser.id,
+    },
+    {
+      note: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.",
+      id_user_notes: getUser.id,
+    },
+  ];
 
-  await prisma.user.create({
-    data: {
-      born_date: new Date("1980-04-01 09:00:00"),
-      email: "admin@gmail.com",
-      name: "Admin",
-      password,
-      role: Role.ADMIN,
-    },
+  await prisma.notes.createMany({
+    data,
   });
 };
 
 async function destroy() {
-  await prisma.student.deleteMany({});
-  await prisma.user.deleteMany({});
+  await prisma.notes.deleteMany({});
 }
