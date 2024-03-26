@@ -4,6 +4,7 @@ import { Notes } from "@/app/Notes";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Feather } from "@expo/vector-icons";
 import { Profile } from "@/app/Profile";
+import { Schedule } from "@/app/Schedule";
 
 const Drawer = createDrawerNavigator();
 
@@ -13,7 +14,7 @@ export function DrawnRoutes() {
       initialRouteName="index"
       screenOptions={{
         title: "Cantinho da Geo",
-        headerStyle: { backgroundColor: "#F29D52" },
+        headerStyle: { backgroundColor: "#fed7aa" },
         headerTintColor: "#fff",
       }}
     >
@@ -45,6 +46,16 @@ export function DrawnRoutes() {
             <Feather name="file-text" color={color} size={size} />
           ),
           drawerLabel: "Recados",
+        }}
+      />
+      <Drawer.Screen
+        name="schedule"
+        component={Schedule}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Feather name="calendar" color={color} size={size} />
+          ),
+          drawerLabel: "Agendamento",
         }}
       />
       <Drawer.Screen

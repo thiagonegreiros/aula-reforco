@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "Cantinho da Geo",
+    "slug": "Cantinho da Geo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

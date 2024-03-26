@@ -6,7 +6,7 @@ import { cn } from "../lib/utils";
 const badgeVariants = cva("flex flex-row items-center px-2 py-2 text-xs", {
   variants: {
     variant: {
-      default: "bg-gray-500 rounded-full",
+      default: "bg-cyan-500 rounded-lg",
       secondary: "bg-none border border-gray-500 rounded",
       destructive: "bg-destructive",
       success: "bg-green-500 dark:bg-green-700",
@@ -20,7 +20,7 @@ const badgeVariants = cva("flex flex-row items-center px-2 py-2 text-xs", {
 const badgeTextVariants = cva("font-medium text-center text-xs", {
   variants: {
     variant: {
-      default: "text-white",
+      default: "text-white font-bold",
       secondary: "text-secondary-foreground",
       destructive: "text-destructive-foreground",
       success: "text-green-100",
