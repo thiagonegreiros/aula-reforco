@@ -23,6 +23,7 @@ model User {
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   Student    Student[]
+  Notes      Notes[]
 
   @@map("user")
 }
@@ -37,8 +38,8 @@ model Student {
   class_time         DateTime
   qty_days_peer_week Int
   active             Boolean  @default(false)
-  user_id            Int
-  user               User     @relation(fields: [user_id], references: [id])
+  id_user_student    Int
+  user               User     @relation(fields: [id_user_student], references: [id])
   created_at         DateTime @default(now())
   updated_at         DateTime @updatedAt
 
@@ -53,4 +54,15 @@ model Subjects {
   updated_at  DateTime @updatedAt
 
   @@map("subjects")
+}
+
+model Notes {
+  id            Int      @id @default(autoincrement())
+  note          String
+  id_user_notes Int
+  user          User     @relation(fields: [id_user_notes], references: [id])
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  @@map("notes")
 }
