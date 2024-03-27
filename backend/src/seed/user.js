@@ -1,5 +1,4 @@
 const { PrismaClient, Role } = require("@prisma/client");
-const crypto = require("node:crypto");
 const prisma = new PrismaClient();
 
 module.exports.createUserSeed = async function createUserSeed() {
@@ -7,11 +6,7 @@ module.exports.createUserSeed = async function createUserSeed() {
 
   console.log("\n - Create User/Student");
 
-  const secret = "geoforce";
-  const password = crypto
-    .createHash("sha256", secret)
-    .update("123456")
-    .digest("hex");
+  const password = Bun.password.hash("123456");
 
   // Student
   await prisma.user.upsert({
