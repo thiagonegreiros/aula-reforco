@@ -7,31 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  STUDENT
-  TEACHER
-  ADMIN
-}
-
 model User {
-  id         Int       @id @default(autoincrement())
-  email      String    @unique
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
   password   String
   born_date  DateTime
   name       String
-  role       Role      @default(STUDENT)
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  Student    Student[]
-  Notes      Notes[]
+  role       Role     @default(STUDENT)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   Lesson     Lesson[]
+  Notes      Notes[]
+  Student    Student?
 
   @@map("user")
 }
 
 model Student {
   id                 Int      @id @default(autoincrement())
-  name               String
   father_name        String
   mother_name        String
   responsible_number String
@@ -39,10 +32,11 @@ model Student {
   class_time         DateTime
   qty_days_peer_week Int
   active             Boolean  @default(false)
-  id_user_student    Int
-  user               User     @relation(fields: [id_user_student], references: [id])
+  school_grade       String
   created_at         DateTime @default(now())
   updated_at         DateTime @updatedAt
+  id_user_student    Int      @unique
+  user               User     @relation(fields: [id_user_student], references: [id])
 
   @@map("student")
 }
@@ -62,9 +56,9 @@ model Notes {
   id            Int      @id @default(autoincrement())
   note          String
   id_user_notes Int
-  user          User     @relation(fields: [id_user_notes], references: [id])
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
+  user          User     @relation(fields: [id_user_notes], references: [id])
 
   @@map("notes")
 }
@@ -77,9 +71,14 @@ model Lesson {
   id_subjects_lesson Int
   created_at         DateTime @default(now())
   updated_at         DateTime @updatedAt
-
-  user     User     @relation(fields: [id_user_lesson], references: [id])
-  subjects Subjects @relation(fields: [id_subjects_lesson], references: [id])
+  subjects           Subjects @relation(fields: [id_subjects_lesson], references: [id])
+  user               User     @relation(fields: [id_user_lesson], references: [id])
 
   @@map("lesson")
+}
+
+enum Role {
+  STUDENT
+  TEACHER
+  ADMIN
 }

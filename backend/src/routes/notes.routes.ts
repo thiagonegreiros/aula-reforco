@@ -67,4 +67,10 @@ notesRoutes.put(
   },
 );
 
+notesRoutes.delete("/:id", ({ params: { id } }) => notesHandler.remove(id), {
+  params: t.Object({
+    id: t.Numeric(),
+  }),
+});
+
 export { notesRoutes };
