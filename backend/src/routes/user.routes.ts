@@ -4,7 +4,7 @@ import {
   createUserSchema,
   findParamsUserSchema,
   updateUserSchema,
-} from "../schemas/user.shema";
+} from "../schemas/user.schema";
 import { UpdateUserDto } from "../dtos/users/user.dto";
 
 const userRoutes = new Elysia({ prefix: "/user" });
