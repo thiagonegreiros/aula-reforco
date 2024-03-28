@@ -1,13 +1,18 @@
 import { Elysia, t } from "elysia";
 import { StudentHandler } from "../handlers/students.handler";
+import {
+  studentBody,
+  studentBodyUpdate,
+  studentParam,
+} from "../schemas/student.schema";
 
 const studentsRoutes = new Elysia({ prefix: "/student" });
 const studentHandler = new StudentHandler();
 
-studentsRoutes.get("/", studentHandler.findAll());
+studentsRoutes.get("/", async () => await studentHandler.findAll());
 studentsRoutes.get(
   "/:id",
-  async ({ params: { id } }) => studentHandler.findById(id),
+  async ({ params: { id } }) => await studentHandler.findById(id),
   {
     params: t.Object({
       id: t.Numeric(),
@@ -32,15 +37,7 @@ studentsRoutes.post(
     }
   },
   {
-    body: t.Object({
-      father_name: t.String(),
-      mother_name: t.String(),
-      responsible_number: t.String(),
-      student_name: t.Optional(t.String()),
-      class_time: t.Date(),
-      qty_days_peer_week: t.Number(),
-      id_user_student: t.Number(),
-    }),
+    body: studentBody,
     transform({ body }) {
       // Apply transform to class_time field if needed
       if (body.class_time && typeof body.class_time === "string") {
@@ -81,17 +78,7 @@ studentsRoutes.put(
     }
   },
   {
-    body: t.Object({
-      father_name: t.String(),
-      mother_name: t.String(),
-      responsible_number: t.String(),
-      student_name: t.Optional(t.String()),
-      class_time: t.Date(),
-      qty_days_peer_week: t.Number(),
-      active: t.Boolean(),
-      school_grade: t.String(),
-      id_user_student: t.Number(),
-    }),
+    body: studentBodyUpdate,
     transform({ body }) {
       if (body.class_time && typeof body.class_time === "string") {
         body.class_time = new Date(body.class_time);
@@ -102,11 +89,9 @@ studentsRoutes.put(
 
 studentsRoutes.delete(
   "/:id",
-  ({ params: { id } }) => studentHandler.remove(id),
+  async ({ params: { id } }) => await studentHandler.remove(id),
   {
-    params: t.Object({
-      id: t.Numeric(),
-    }),
+    params: studentParam,
   },
 );
 

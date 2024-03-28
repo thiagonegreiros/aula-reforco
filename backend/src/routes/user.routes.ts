@@ -10,10 +10,14 @@ import { UpdateUserDto } from "../dtos/users/user.dto";
 const userRoutes = new Elysia({ prefix: "/user" });
 const userHandler = new UsersHandler();
 
-userRoutes.get("/", userHandler.findAll());
-userRoutes.get("/:id", async ({ params: { id } }) => userHandler.findById(id), {
-  params: findParamsUserSchema,
-});
+userRoutes.get("/", async () => await userHandler.findAll());
+userRoutes.get(
+  "/:id",
+  async ({ params: { id } }) => await userHandler.findById(id),
+  {
+    params: findParamsUserSchema,
+  },
+);
 
 userRoutes.post(
   "/",
@@ -77,8 +81,12 @@ userRoutes.put(
   },
 );
 
-userRoutes.delete("/:id", ({ params: { id } }) => userHandler.remove(id), {
-  params: findParamsUserSchema,
-});
+userRoutes.delete(
+  "/:id",
+  async ({ params: { id } }) => await userHandler.remove(id),
+  {
+    params: findParamsUserSchema,
+  },
+);
 
 export { userRoutes };

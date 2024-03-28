@@ -1,18 +1,16 @@
-import { Elysia, t } from "elysia";
+import { Elysia } from "elysia";
 import { NotesHandler } from "../handlers/notes.handler";
-import { createNoteType } from "../dtos/notes/createNote.dto";
+import { noteBody, noteParams } from "../schemas/notes.schema";
 
 const notesRoutes = new Elysia({ prefix: "/note" });
 const notesHandler = new NotesHandler();
 
-notesRoutes.get("/", notesHandler.findAll());
+notesRoutes.get("/", async () => await notesHandler.findAll());
 notesRoutes.get(
   "/:id",
-  async ({ params: { id } }) => notesHandler.findById(id),
+  async ({ params: { id } }) => await notesHandler.findById(id),
   {
-    params: t.Object({
-      id: t.Numeric(),
-    }),
+    params: noteParams,
   },
 );
 
@@ -33,7 +31,7 @@ notesRoutes.post(
     }
   },
   {
-    body: createNoteType,
+    body: noteBody,
   },
 );
 
@@ -60,17 +58,16 @@ notesRoutes.put(
     }
   },
   {
-    body: t.Object({
-      id_user_notes: t.Number(),
-      note: t.String(),
-    }),
+    body: noteBody,
   },
 );
 
-notesRoutes.delete("/:id", ({ params: { id } }) => notesHandler.remove(id), {
-  params: t.Object({
-    id: t.Numeric(),
-  }),
-});
+notesRoutes.delete(
+  "/:id",
+  async ({ params: { id } }) => await notesHandler.remove(id),
+  {
+    params: noteParams,
+  },
+);
 
 export { notesRoutes };

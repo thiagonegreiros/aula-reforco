@@ -4,11 +4,11 @@ import { CreateUserDto } from "../dtos/users/user.dto";
 
 export class UsersRepository {
   async findAll() {
-    return await prisma.user.findMany({});
+    return prisma.user.findMany({});
   }
 
   async findById(id: number) {
-    return await prisma.user.findUnique({
+    return prisma.user.findUnique({
       where: {
         id,
       },
@@ -16,18 +16,18 @@ export class UsersRepository {
   }
 
   async create(data: CreateUserDto) {
-    return await prisma.user.create({ data });
+    return prisma.user.create({ data });
   }
 
   async update(data: User) {
-    return await prisma.user.update({
+    return prisma.user.update({
       where: { id: data.id },
       data,
     });
   }
 
   async removeById(id: number) {
-    return await prisma.user.delete({
+    return prisma.user.delete({
       where: {
         id,
       },
