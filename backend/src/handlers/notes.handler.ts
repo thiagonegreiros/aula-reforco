@@ -8,13 +8,15 @@ export class NotesHandler {
   private userRepository = new UsersRepository();
 
   public async findAll() {
-    const notes = await this.notesRepository.findAll();
-
-    return notes;
+    return this.notesRepository.findAll();
   }
 
   public async findById(id: number) {
     return this.notesRepository.findById(id);
+  }
+
+  public async findByUserId(id_user_notes: number) {
+    return this.notesRepository.findByUserId(id_user_notes);
   }
 
   public async add({ id_user_notes, note }: CreateNoteDto) {

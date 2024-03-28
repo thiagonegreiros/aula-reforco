@@ -5,7 +5,7 @@ export const lessonParams = t.Object({
 });
 
 export const lessonUserParams = t.Object({
-  id_user_lesson: t.Number(),
+  id_user_lesson: t.Numeric(),
 });
 
 export const lessonBody = t.Object({

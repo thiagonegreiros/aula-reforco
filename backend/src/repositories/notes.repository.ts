@@ -15,6 +15,12 @@ export class NotesRepository {
     });
   }
 
+  async findByUserId(id_user_notes: number) {
+    return prisma.notes.findMany({
+      where: { id_user_notes },
+    });
+  }
+
   async create(data: CreateNoteDto) {
     return prisma.notes.create({
       data,

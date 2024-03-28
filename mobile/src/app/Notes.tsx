@@ -2,25 +2,27 @@ import { User } from "@/components/User";
 import { FlatList, Text, View } from "react-native";
 import { formatDateDayAndWeek } from "@/utils/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/Card";
+import { useEffect, useState } from "react";
+import { api } from "@/services/api";
 
 export function Notes() {
-  const DATA = [
-    {
-      id: 1,
-      created_at: formatDateDayAndWeek(new Date().toString()),
-      note: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.",
-    },
-    {
-      id: 2,
-      created_at: formatDateDayAndWeek(new Date().toString()),
-      note: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.",
-    },
-    {
-      id: 3,
-      created_at: formatDateDayAndWeek(new Date().toString()),
-      note: "Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.",
-    },
-  ];
+  const [notes, setNotes] = useState();
+
+  //TODO: Make a interface from data
+  async function fetchNotes() {
+    const { data } = await api.get("/note/user/1");
+
+    const notes = data.map((note) => ({
+      ...note,
+      created_at: formatDateDayAndWeek(note.created_at),
+    }));
+
+    setNotes(notes);
+  }
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
 
   return (
     <View className="h-full px-4">
@@ -29,7 +31,7 @@ export function Notes() {
       </View>
 
       <FlatList
-        data={DATA}
+        data={notes}
         renderItem={({ item }) => (
           <Card className="bg-white bg-gray-200 mt-4">
             <CardHeader>

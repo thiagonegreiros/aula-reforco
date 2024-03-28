@@ -3,36 +3,26 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/Card";
 import { User } from "@/components/User";
 import { FlatList, Text, View } from "react-native";
 import { formatDate } from "@/utils/utils";
+import { api } from "@/services/api";
+import { useEffect, useState } from "react";
+
 export function Lesson() {
-  const DATA = [
-    {
-      id: 1,
-      subject: "Matemágica",
-      title: "Derivadas e Integrais",
-      description:
-        "Integration and derivation are fundamental concepts in calculus, enabling us to understand the relationship between a function and its rate of change or area under the curve.",
+  const [lessons, setLessons] = useState();
 
-      created_at: formatDate(new Date().toString()),
-    },
-    {
-      id: 2,
-      subject: "Português",
-      title: "Derivadas e Integrais",
-      description:
-        "Integration and derivation are fundamental concepts in calculus, enabling us to understand the relationship between a function and its rate of change or area under the curve.",
+  async function fetchLessons() {
+    const { data } = await api.get("/lesson/user/1");
 
-      created_at: formatDate(new Date().toString()),
-    },
-    {
-      id: 3,
-      subject: "Física",
-      title: "Derivadas e Integrais",
-      description:
-        "Integration and derivation are fundamental concepts in calculus, enabling us to understand the relationship between a function and its rate of change or area under the curve.",
+    const lessons = data.map((lesson) => ({
+      ...lesson,
+      created_at: formatDate(lesson.created_at),
+    }));
 
-      created_at: formatDate(new Date().toString()),
-    },
-  ];
+    setLessons(lessons);
+  }
+
+  useEffect(() => {
+    fetchLessons();
+  }, []);
 
   return (
     <View className="h-full flex-1 px-4">
@@ -40,12 +30,12 @@ export function Lesson() {
         <User />
       </View>
       <FlatList
-        data={DATA}
+        data={lessons}
         renderItem={({ item }) => (
           <Card className="bg-gray-200 mb-4 mt-4">
             <CardHeader>
               <View className="flex-row">
-                <Badge key={item.id} label={item.subject} />
+                <Badge key={item.id} label={item.subjects.name} />
               </View>
             </CardHeader>
             <CardContent>

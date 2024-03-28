@@ -1,6 +1,6 @@
 import { Elysia } from "elysia";
 import { NotesHandler } from "../handlers/notes.handler";
-import { noteBody, noteParams } from "../schemas/notes.schema";
+import { noteBody, noteParams, noteUserParams } from "../schemas/notes.schema";
 
 const notesRoutes = new Elysia({ prefix: "/note" });
 const notesHandler = new NotesHandler();
@@ -11,6 +11,15 @@ notesRoutes.get(
   async ({ params: { id } }) => await notesHandler.findById(id),
   {
     params: noteParams,
+  },
+);
+
+notesRoutes.get(
+  "/user/:id_user_notes",
+  async ({ params: { id_user_notes } }) =>
+    await notesHandler.findByUserId(id_user_notes),
+  {
+    params: noteUserParams,
   },
 );
 
