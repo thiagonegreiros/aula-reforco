@@ -15,6 +15,19 @@ export class LessonsRepository {
     });
   }
 
+  public async findByUserId(id_user_lesson: number) {
+    return prisma.lesson.findMany({
+      include: {
+        subjects: {
+          select: {
+            name: true,
+          },
+        },
+      },
+      where: { id_user_lesson },
+    });
+  }
+
   public async findById(id: number) {
     return prisma.lesson.findUnique({
       where: { id },

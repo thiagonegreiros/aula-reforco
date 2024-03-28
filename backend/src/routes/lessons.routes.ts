@@ -1,7 +1,10 @@
 import { Elysia } from "elysia";
-import { noteParams } from "../schemas/notes.schema";
 import { LessonHandler } from "../handlers/lesson.handler";
-import { lessonBody, lessonParams } from "../schemas/lesson.schema";
+import {
+  lessonBody,
+  lessonParams,
+  lessonUserParams,
+} from "../schemas/lesson.schema";
 import { UpdateLessonDto } from "../dtos/lesson/updateLesson.dto";
 
 const lessonRoutes = new Elysia({ prefix: "/lesson" });
@@ -12,7 +15,16 @@ lessonRoutes.get(
   "/:id",
   async ({ params: { id } }) => await lessonHandler.findById(id),
   {
-    params: noteParams,
+    params: lessonParams,
+  },
+);
+
+lessonRoutes.get(
+  "/user/:id_user_lesson",
+  async ({ params: { id_user_lesson } }) =>
+    await lessonHandler.findByUserId(id_user_lesson),
+  {
+    params: lessonUserParams,
   },
 );
 

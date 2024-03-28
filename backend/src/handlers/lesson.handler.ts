@@ -17,6 +17,10 @@ export class LessonHandler {
     return this.lessonRepository.findById(id);
   }
 
+  public async findByUserId(id_user_lesson: number) {
+    return this.lessonRepository.findByUserId(id_user_lesson);
+  }
+
   public async add({
     id_user_lesson,
     id_subjects_lesson,
