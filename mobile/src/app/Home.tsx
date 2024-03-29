@@ -4,6 +4,8 @@ import { Menu } from "@/components/Menu";
 import { User } from "@/components/User";
 
 export function Home() {
+  //TODO: create a personal message like a "Olá Professora, eu sou o aluno Juarez.";
+  let url = "https://wa.me/+55092994495985?text=hello";
   return (
     <>
       <View className="bg-white px-6 py-8 h-32">
@@ -16,7 +18,7 @@ export function Home() {
           <Menu title="Lições Aplicadas" navigate="lesson" icon="book" />
           <Menu
             title="Enviar uma mensagem"
-            navigate="index"
+            deepLink={url}
             icon="message-square"
           />
           <Menu title="Agendamento" navigate="schedule" icon="calendar" />
