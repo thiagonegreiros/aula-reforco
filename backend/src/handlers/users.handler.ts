@@ -15,6 +15,10 @@ export class UsersHandler {
     return this.usersRepository.findById(id);
   }
 
+  public async findByEmail(email: string) {
+    return this.usersRepository.findByEmail(email);
+  }
+
   public async add({ email, password, born_date, name, role }: CreateUserDto) {
     const passHashed = await this.hashProvider.generateHash(password);
 
