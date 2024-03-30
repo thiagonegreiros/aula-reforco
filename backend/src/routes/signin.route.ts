@@ -1,12 +1,11 @@
 import { Elysia } from "elysia";
-import { AuthenticateHandler } from "../handlers/auth.handler";
 import { createUserSchema } from "../schemas/user.schema";
 import { UsersHandler } from "../handlers/users.handler";
 import { Role } from ".prisma/client";
 
 const userHandler = new UsersHandler();
 
-const singInRoute = new Elysia({ prefix: "sing-in" }).post(
+const signInRoute = new Elysia({ prefix: "sign-in" }).post(
   "/",
   async ({ body }) => {
     try {
@@ -36,4 +35,4 @@ const singInRoute = new Elysia({ prefix: "sing-in" }).post(
   },
 );
 
-export { singInRoute };
+export { signInRoute };

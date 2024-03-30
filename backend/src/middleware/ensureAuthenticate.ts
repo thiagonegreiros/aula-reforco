@@ -7,7 +7,6 @@ interface TokenPayload {
 }
 
 export function ensureAuthenticate(headers: any) {
-  console.log(headers);
   const authToken = headers.authorization;
   if (!authToken) {
     return {
