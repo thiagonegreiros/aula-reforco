@@ -16,7 +16,7 @@ const Input = forwardRef<React.ElementRef<typeof TextInput>, InputProps>(
       <TextInput
         className={cn(
           inputClasses,
-          "border border-input py-2.5 px-4 rounded-lg"
+          "h-14 px-4 text-md text-white mb-4 bg-gray-300 rounded-md border-0 focus:opacity-80 focus:border-cyan-600 focus:border"
         )}
         {...props}
       />

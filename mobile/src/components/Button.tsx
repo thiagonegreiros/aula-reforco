@@ -12,10 +12,10 @@ const buttonVariants = cva(
         secondary: "bg-sky-400",
         destructive: "bg-red-400",
         ghost: "bg-slate-700",
-        link: "text-primary underline-offset-4",
+        link: "transparent border border-sky-500",
       },
       size: {
-        default: "h-10 px-4",
+        default: "h-10 w-full",
         sm: "h-8 px-2",
         lg: "h-12 px-8",
       },
@@ -27,17 +27,17 @@ const buttonVariants = cva(
   }
 );
 
-const buttonTextVariants = cva("text-center font-medium", {
+const buttonTextVariants = cva("text-center", {
   variants: {
     variant: {
-      default: "text-primary-foreground",
+      default: "text-white",
       secondary: "text-white",
       destructive: "text-white",
       ghost: "text-primary-foreground",
-      link: "text-primary-foreground underline",
+      link: "text-white",
     },
     size: {
-      default: "text-base",
+      default: "text-sm",
       sm: "text-sm",
       lg: "text-xl",
     },
