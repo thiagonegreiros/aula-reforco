@@ -1,17 +1,30 @@
 import { Home } from "@/app/Home";
 import { Lesson } from "@/app/Lesson";
 import { Notes } from "@/app/Notes";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  DrawerNavigationProp,
+  createDrawerNavigator,
+} from "@react-navigation/drawer";
 import { Feather } from "@expo/vector-icons";
 import { Profile } from "@/app/Profile";
 import { Schedule } from "@/app/Schedule";
 
-const Drawer = createDrawerNavigator();
+type AppRoutes = {
+  home: undefined;
+  lesson: undefined;
+  notes: undefined;
+  schedule: undefined;
+  profile: undefined;
+};
+
+export type AppNavigatorRoutesProps = DrawerNavigationProp<AppRoutes>;
+
+const Drawer = createDrawerNavigator<AppRoutes>();
 
 export function DrawnRoutes() {
   return (
     <Drawer.Navigator
-      initialRouteName="index"
+      initialRouteName="home"
       screenOptions={{
         title: "Cantinho da Geo",
         headerStyle: { backgroundColor: "#fed7aa" },
@@ -19,7 +32,7 @@ export function DrawnRoutes() {
       }}
     >
       <Drawer.Screen
-        name="index"
+        name="home"
         component={Home}
         options={{
           drawerIcon: ({ color, size }) => (

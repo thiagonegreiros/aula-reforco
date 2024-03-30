@@ -6,12 +6,30 @@ import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { AuthNavigatorRoutesProps } from "@/routes/auth.routes";
+import { useForm, Controller } from "react-hook-form";
+
+type FormDataProps = {
+  name: string;
+  email: string;
+  born_date: string;
+  password: string;
+  repeat_password: string;
+};
 
 export function SignUp() {
-  const navigation = useNavigation<AuthNavigatorRoutesProps>();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormDataProps>();
 
+  const navigation = useNavigation<AuthNavigatorRoutesProps>();
   function handleGoBack() {
     navigation.goBack();
+  }
+
+  function handleSignUp(data: FormDataProps) {
+    console.log(data);
   }
 
   return (
@@ -43,28 +61,81 @@ export function SignUp() {
             Crie a sua conta
           </Text>
 
-          <Input placeholder="Nome" className="w-full" />
-          <Input
-            placeholder="E-mail"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            className="w-full"
+          <Controller
+            control={control}
+            name="name"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                placeholder="Nome"
+                className="w-full"
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
           />
-          <Input
-            placeholder="Data de nascimento"
-            keyboardType="number-pad"
-            className="w-full"
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                placeholder="E-mail"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                className="w-full"
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
           />
-          <Input placeholder="Senha" secureTextEntry className="w-full" />
-          <Input
-            placeholder="Repetir Senha"
-            secureTextEntry
-            className="w-full"
+
+          <Controller
+            control={control}
+            name="born_date"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                placeholder="Data de nascimento"
+                keyboardType="number-pad"
+                className="w-full"
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                placeholder="Senha"
+                className="w-full"
+                secureTextEntry
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="repeat_password"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                placeholder="Repetir Senha"
+                className="w-full"
+                secureTextEntry
+                onChangeText={onChange}
+                value={value}
+                onSubmitEditing={handleSubmit(handleSignUp)}
+                returnKeyType="send"
+              />
+            )}
           />
 
           <Button
             label="Criar Conta"
             className="w-full bg-sky-500 text-white"
+            onPress={handleSubmit(handleSignUp)}
           />
         </View>
 
