@@ -7,21 +7,35 @@ import { Button } from "@/components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { AuthNavigatorRoutesProps } from "@/routes/auth.routes";
 import { useForm, Controller } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { DateInput } from "@/components/DateInput";
+import { formatDate } from "@/utils/utils";
 
 type FormDataProps = {
   name: string;
   email: string;
-  born_date: string;
+  born_date: Date;
   password: string;
   repeat_password: string;
 };
+
+const signUpSchema = yup.object({
+  name: yup.string().required("Informe o nome"),
+  email: yup.string().required("Infome o e-mail").email("E-mail inválido"),
+  born_date: yup.date().required("Informe a data de nascimento"),
+  password: yup.string().required("Infome a senha"),
+  repeat_password: yup.string().required("Repita a senha"),
+});
 
 export function SignUp() {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormDataProps>();
+  } = useForm<FormDataProps>({
+    resolver: yupResolver(signUpSchema),
+  });
 
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
   function handleGoBack() {
@@ -70,9 +84,11 @@ export function SignUp() {
                 className="w-full"
                 onChangeText={onChange}
                 value={value}
+                errorMessage={errors.name?.message}
               />
             )}
           />
+
           <Controller
             control={control}
             name="email"
@@ -84,6 +100,7 @@ export function SignUp() {
                 className="w-full"
                 onChangeText={onChange}
                 value={value}
+                errorMessage={errors.email?.message}
               />
             )}
           />
@@ -92,12 +109,13 @@ export function SignUp() {
             control={control}
             name="born_date"
             render={({ field: { onChange, value } }) => (
-              <Input
+              <DateInput
                 placeholder="Data de nascimento"
                 keyboardType="number-pad"
                 className="w-full"
                 onChangeText={onChange}
                 value={value}
+                errorMessage={errors.born_date?.message}
               />
             )}
           />
@@ -112,6 +130,7 @@ export function SignUp() {
                 secureTextEntry
                 onChangeText={onChange}
                 value={value}
+                errorMessage={errors.password?.message}
               />
             )}
           />
@@ -128,6 +147,7 @@ export function SignUp() {
                 value={value}
                 onSubmitEditing={handleSubmit(handleSignUp)}
                 returnKeyType="send"
+                errorMessage={errors.repeat_password?.message}
               />
             )}
           />
