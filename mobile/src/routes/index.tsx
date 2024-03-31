@@ -1,11 +1,14 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { DrawnRoutes } from "./drawn.routes";
 import { AuthRoutes } from "./auth.routes";
+import { ToastProvider } from "@/components/Toast";
 
 export default function Routes() {
   return (
     <NavigationContainer>
-      <AuthRoutes />
+      <ToastProvider position="top">
+        <AuthRoutes />
+      </ToastProvider>
     </NavigationContainer>
   );
 }

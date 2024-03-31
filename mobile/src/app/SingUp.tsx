@@ -11,6 +11,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DateInput } from "@/components/DateInput";
 import { formatDate } from "@/utils/utils";
+import { api } from "@/services/api";
+import { useToast } from "@/components/Toast";
 
 type FormDataProps = {
   name: string;
@@ -24,8 +26,14 @@ const signUpSchema = yup.object({
   name: yup.string().required("Informe o nome"),
   email: yup.string().required("Infome o e-mail").email("E-mail inválido"),
   born_date: yup.date().required("Informe a data de nascimento"),
-  password: yup.string().required("Infome a senha"),
-  repeat_password: yup.string().required("Repita a senha"),
+  password: yup
+    .string()
+    .required("Infome a senha")
+    .min(6, "A senha deve ter no minimo 6 dígitos"),
+  repeat_password: yup
+    .string()
+    .required("Repita a senha")
+    .oneOf([yup.ref("password"), null], "A confirmação de senha não confere."),
 });
 
 export function SignUp() {
@@ -37,13 +45,28 @@ export function SignUp() {
     resolver: yupResolver(signUpSchema),
   });
 
+  const { toast } = useToast();
+
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
   function handleGoBack() {
     navigation.goBack();
   }
 
-  function handleSignUp(data: FormDataProps) {
-    console.log(data);
+  async function handleSignUp(data: FormDataProps) {
+    try {
+      const result = await api.post("/sign-up", {
+        name: data.name,
+        email: data.email,
+        born_date: data.born_date,
+        password: data.password,
+      });
+
+      console.log(result.data);
+      toast("Usuário cadastrado com sucesso.", "success", 4000);
+    } catch (error) {
+      console.error(error);
+      toast("Houve um erro na criação", "destructive", 4000);
+    }
   }
 
   return (
