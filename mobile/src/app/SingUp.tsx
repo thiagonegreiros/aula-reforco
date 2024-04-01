@@ -10,9 +10,9 @@ import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DateInput } from "@/components/DateInput";
-import { formatDate } from "@/utils/utils";
 import { api } from "@/services/api";
 import { useToast } from "@/components/Toast";
+import { AppError } from "@/utils/AppError";
 
 type FormDataProps = {
   name: string;
@@ -52,20 +52,28 @@ export function SignUp() {
     navigation.goBack();
   }
 
-  async function handleSignUp(data: FormDataProps) {
+  async function handleSignUp({
+    name,
+    email,
+    born_date,
+    password,
+  }: FormDataProps) {
     try {
-      const result = await api.post("/sign-up", {
-        name: data.name,
-        email: data.email,
-        born_date: data.born_date,
-        password: data.password,
+      await api.post("/sign-up", {
+        name,
+        email,
+        born_date,
+        password,
       });
 
-      console.log(result.data);
       toast("Usuário cadastrado com sucesso.", "success", 4000);
     } catch (error) {
-      console.error(error);
-      toast("Houve um erro na criação", "destructive", 4000);
+      console.error("dentro do error: ", error);
+      const isAppError = error instanceof AppError;
+      const message = isAppError
+        ? error.message
+        : "Não foi possivel criar conta. Tente novamente mais tarde.";
+      toast(message, "destructive", 4000);
     }
   }
 

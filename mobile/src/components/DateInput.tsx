@@ -29,8 +29,6 @@ export const DateInput = ({
     }
   };
 
-  console.log(value);
-
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
   };

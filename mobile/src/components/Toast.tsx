@@ -5,7 +5,7 @@ import { cn } from "../lib/utils";
 
 const toastVariants = {
   default: "bg-foreground",
-  destructive: "bg-red-500",
+  destructive: "bg-red-600",
   success: "bg-green-500",
   info: "bg-blue-500",
 };
@@ -53,7 +53,7 @@ function Toast({
     <Animated.View
       className={`
         ${toastVariants[variant]}
-        m-2 mb-1 p-4 rounded-lg shadow-md transform transition-all
+        m-2 mb-1 p-4 rounded-lg shadow-md transform transition-all w-full
       `}
       style={{
         opacity,
@@ -69,7 +69,7 @@ function Toast({
     >
       <Text className="font-semibold text-left text-background">{message}</Text>
       {showProgress && (
-        <View className="mt-2 rounded">
+        <View className="mt-2 rounded w-full text-white">
           <Animated.View
             className="bg-white dark:bg-black h-2 opacity-30 rounded"
             style={{
