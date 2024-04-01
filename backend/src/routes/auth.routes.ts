@@ -7,7 +7,14 @@ const authHandler = new AuthenticateHandler();
 authRoutes.post(
   "/",
   async ({ body }) => {
-    return authHandler.authenticate(body);
+    try {
+      return authHandler.authenticate(body);
+    } catch (error) {
+      return {
+        message: "" + error,
+        status: 500,
+      };
+    }
   },
   {
     body: t.Object({

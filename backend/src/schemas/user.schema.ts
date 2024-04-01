@@ -6,7 +6,7 @@ export const createUserSchema = t.Object({
   password: t.String(),
   born_date: t.Date(),
   name: t.String(),
-  role: t.Enum(Role),
+  role: t.Optional(t.Enum(Role)),
 });
 
 export const updateUserSchema = t.Object({
@@ -15,7 +15,7 @@ export const updateUserSchema = t.Object({
   password: t.String(),
   born_date: t.Date(),
   name: t.String(),
-  role: t.Enum(Role),
+  role: t.Optional(t.Enum(Role)),
 });
 
 export const findParamsUserSchema = t.Object({

@@ -13,7 +13,7 @@ model User {
   password   String
   born_date  DateTime
   name       String
-  role       Role     @default(STUDENT)
+  role       Role?    @default(STUDENT)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   Lesson     Lesson[]

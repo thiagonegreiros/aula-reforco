@@ -13,10 +13,11 @@ export class AuthenticateHandler {
     if (!userExists) {
       return {
         message: "Invalid credentials",
+        status: 500,
       };
     }
 
-    const isPasswordValid = this.hashProvider.compareHash(
+    const isPasswordValid = await this.hashProvider.compareHash(
       password,
       userExists.password,
     );
@@ -24,6 +25,7 @@ export class AuthenticateHandler {
     if (!isPasswordValid) {
       return {
         message: "Invalid credentials",
+        status: 500,
       };
     }
 
@@ -35,6 +37,13 @@ export class AuthenticateHandler {
           expiresIn: "1d",
         },
       ),
+      user: {
+        id: userExists.id,
+        email: userExists.email,
+        born_date: userExists.born_date,
+        name: userExists.name,
+        role: userExists.role,
+      },
     };
   }
 }

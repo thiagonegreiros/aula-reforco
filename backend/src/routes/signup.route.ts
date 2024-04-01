@@ -1,27 +1,22 @@
 import { Elysia } from "elysia";
 import { createUserSchema } from "../schemas/user.schema";
 import { UsersHandler } from "../handlers/users.handler";
-import { Role } from ".prisma/client";
 
 const userHandler = new UsersHandler();
 
-const signInRoute = new Elysia({ prefix: "sign-in" }).post(
+const signUpRoute = new Elysia({ prefix: "sign-up" }).post(
   "/",
   async ({ body }) => {
     try {
-      if (body.role === Role.STUDENT) {
-        await userHandler.add(body);
-        return {
-          message: "Usuário criado com sucesso",
-          status: 200,
-        };
-      } else {
-        throw new Error("Não é possível criar usuário de outra função.");
-      }
+      await userHandler.add(body);
+      return {
+        message: "Usuário criado com sucesso",
+        status: 200,
+      };
     } catch (error) {
       return {
-        message: "Error - " + error,
-        status: 500,
+        message: String(error.message),
+        status: error.statusCode,
       };
     }
   },
@@ -35,4 +30,4 @@ const signInRoute = new Elysia({ prefix: "sign-in" }).post(
   },
 );
 
-export { signInRoute };
+export { signUpRoute };

@@ -6,7 +6,7 @@ import { lessonRoutes } from "./routes/lessons.routes";
 import swagger from "@elysiajs/swagger";
 import { authRoutes } from "./routes/auth.routes";
 import { ensureAuthenticate } from "./middleware/ensureAuthenticate";
-import { signInRoute } from "./routes/signin.route";
+import { signUpRoute } from "./routes/signup.route";
 
 const server = new Elysia();
 
@@ -15,7 +15,7 @@ server.use(swagger());
 
 // Routes without authenticate
 server.use(authRoutes);
-server.use(signInRoute);
+server.use(signUpRoute);
 
 //Guard
 server.guard(

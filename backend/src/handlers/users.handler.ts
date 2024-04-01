@@ -2,6 +2,7 @@ import { User } from "@prisma/client";
 import { UsersRepository } from "../repositories/users.repository";
 import { CreateUserDto, UpdateUserDto } from "../dtos/users/user.dto";
 import { HashProvider } from "../provider/hash.provider";
+import { AppError } from "../error/AppError";
 
 export class UsersHandler {
   private usersRepository = new UsersRepository();
@@ -20,6 +21,12 @@ export class UsersHandler {
   }
 
   public async add({ email, password, born_date, name, role }: CreateUserDto) {
+    const user = await this.findByEmail(email);
+
+    if (user) {
+      throw new AppError("E-mail já cadastrado.", 500);
+    }
+
     const passHashed = await this.hashProvider.generateHash(password);
 
     return this.usersRepository.create({

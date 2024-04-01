@@ -5,7 +5,7 @@ export interface CreateUserDto {
   password: string;
   born_date: Date;
   name: string;
-  role: Role;
+  role?: Role;
 }
 
 export interface UpdateUserDto {
@@ -14,5 +14,5 @@ export interface UpdateUserDto {
   password: string;
   born_date: Date;
   name: string;
-  role: Role;
+  role?: Role;
 }
