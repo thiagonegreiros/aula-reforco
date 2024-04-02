@@ -7,6 +7,7 @@ import { storageUserGet, storageUserSave } from "@/storage/storageUser";
 export type AuthContextDataProps = {
   user: UserDto;
   signIn: (email: string, password: string) => Promise<void>;
+  isLoadingUserStorageData: boolean;
 };
 
 type AuthContextProviderProps = {
@@ -19,6 +20,8 @@ export const AuthContext = createContext<AuthContextDataProps>(
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState({} as UserDto);
+  const [isLoadingUserStorageData, setIsLoadingUserStorageData] =
+    useState(true);
 
   async function signIn(email: string, password: string) {
     try {
@@ -34,9 +37,18 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   }
 
   async function loadUserData() {
-    const userLogged = await storageUserGet();
+    try {
+      const userLogged = await storageUserGet();
 
-    if (userLogged) setUser(userLogged);
+      if (userLogged) {
+        setUser(userLogged);
+        setIsLoadingUserStorageData(false);
+      }
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsLoadingUserStorageData(false);
+    }
   }
 
   useEffect(() => {
@@ -48,6 +60,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       value={{
         user,
         signIn,
+        isLoadingUserStorageData,
       }}
     >
       {children}
