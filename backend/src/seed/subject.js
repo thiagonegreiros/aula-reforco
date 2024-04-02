@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 module.exports.createSubjectsSeed = async function createSubjectsSeed() {
   await destroy();
 
-  console.log("\n - Create Lesson");
+  console.log("\n - Create Subjets");
 
   const createSubject = [
     {
@@ -36,6 +36,6 @@ module.exports.createSubjectsSeed = async function createSubjectsSeed() {
 };
 
 async function destroy() {
+  await prisma.lesson.deleteMany({});
   await prisma.subjects.deleteMany({});
 }
-

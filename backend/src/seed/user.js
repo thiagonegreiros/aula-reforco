@@ -6,7 +6,7 @@ module.exports.createUserSeed = async function createUserSeed() {
 
   console.log("\n - Create User/Student");
 
-  const password = Bun.password.hash("123456");
+  const password = "123456";
 
   // Student
   await prisma.user.upsert({

@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 module.exports.createLessonSeed = async function createLessonSeed() {
   await destroy();
 
-  console.log("\n - Create Note");
+  console.log("\n - Create Lesson");
 
   const { id: id_matematica } = await prisma.subjects.findFirst({
     where: { name: "Matemática" },
