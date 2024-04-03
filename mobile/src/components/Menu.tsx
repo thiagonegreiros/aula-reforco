@@ -23,7 +23,7 @@ export function Menu({ title, navigate, deepLink, icon }: Props) {
 
   return (
     <TouchableOpacity onPress={handlePress}>
-      <View className="bg-gray-200 h-32 w-32 m-4 justify-center items-center rounded-2xl">
+      <View className="bg-gray-300 h-32 w-32 m-4 justify-center items-center rounded-2xl">
         <Feather name={icon} size={30} color={colors.ciano[400]} />
         <Text className="text-xs mt-2">{title}</Text>
       </View>

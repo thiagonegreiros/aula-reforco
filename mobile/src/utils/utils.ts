@@ -24,3 +24,18 @@ export function formatDateDayAndWeek(timestamp: string): string {
 
   return `${day}/${month} - ${dayOfWeek}`;
 }
+
+export function getInitalName(nome: string): string {
+  const name = nome.trim().split(" ");
+
+  if (name.length === 0) {
+    return "";
+  }
+
+  const firstLetter = name[0][0];
+  const secondLetter = name[0][1] || "";
+
+  const initialsName = firstLetter.toUpperCase() + secondLetter.toUpperCase();
+
+  return initialsName;
+}
