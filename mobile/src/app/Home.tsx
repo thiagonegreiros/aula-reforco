@@ -8,7 +8,7 @@ export function Home() {
   //TODO: create a personal message like a "Olá Professora, eu sou o aluno Juarez.";
   const { user } = useAuth();
 
-  const msg = `Olá Professora, eu sou o(a) aluno(a) ${user.name}`;
+  const msg = `Olá Professora, eu sou o(a) aluno(a) ${user.name}.`;
 
   let url = "https://wa.me/+55092994495985?text=" + msg;
   return (

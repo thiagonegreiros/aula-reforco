@@ -13,6 +13,7 @@ import { DateInput } from "@/components/DateInput";
 import { api } from "@/services/api";
 import { useToast } from "@/components/Toast";
 import { AppError } from "@/utils/AppError";
+import { useState } from "react";
 
 type FormDataProps = {
   name: string;
@@ -46,6 +47,7 @@ export function SignUp() {
   });
 
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
   function handleGoBack() {
@@ -59,6 +61,7 @@ export function SignUp() {
     password,
   }: FormDataProps) {
     try {
+      setIsLoading(true);
       await api.post("/sign-up", {
         name,
         email,
@@ -69,6 +72,7 @@ export function SignUp() {
       toast("Usuário cadastrado com sucesso.", "success", 4000);
     } catch (error) {
       console.error("dentro do error: ", error);
+      setIsLoading(false);
       const isAppError = error instanceof AppError;
       const message = isAppError
         ? error.message
@@ -187,6 +191,7 @@ export function SignUp() {
             label="Criar Conta"
             className="w-full bg-sky-500 text-white"
             onPress={handleSubmit(handleSignUp)}
+            isLoading={isLoading}
           />
         </View>
 
