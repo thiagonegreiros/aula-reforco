@@ -20,7 +20,7 @@ export function User() {
 
       <Avatar className="w-20 h-20 mt-2">
         <AvatarImage source={{ uri: "https://github.com/thiagonegrei.png" }} />
-        <AvatarFallback className="bg-cyan-400">
+        <AvatarFallback className="bg-cyan-500">
           {getInitalName(user.name)}
         </AvatarFallback>
       </Avatar>
