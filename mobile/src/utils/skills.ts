@@ -1,7 +1,7 @@
 export const SKILLS = [
-  { name: "Matemática", icon: require("@/assets/react-native.png") },
-  { name: "Português", icon: require("@/assets/typescript.png") },
-  { name: "História", icon: require("@/assets/javascript.png") },
-  { name: "Geografia", icon: require("@/assets/nativewind.png") },
-  { name: "Física", icon: require("@/assets/expo.png") },
+  { name: "Matemática", bgColor: "bg-amber-500" },
+  { name: "Português", bgColor: "bg-stone-500" },
+  { name: "História", bgColor: "bg-sky-500" },
+  { name: "Geografia", bgColor: "bg-emerald-500" },
+  { name: "Física", bgColor: "bg-indigo-500" },
 ];
