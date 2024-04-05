@@ -15,18 +15,54 @@ module.exports.createUserSeed = async function createUserSeed() {
     create: {
       born_date: new Date("2003-07-20 09:00:00"),
       email: "douglas@gmail.com",
-      name: "Douglas",
+      name: "Douglas Oliveira",
       password,
       Student: {
         create: {
-          class_time: new Date("2018-04-18 08:00:00"),
           father_name: "José",
           mother_name: "Maria",
-          qty_days_peer_week: 2,
           school_grade: "Primeiro Ano",
-          responsible_number: "+553899999999",
+          responsible_number: "553899999999",
         },
       },
+    },
+  });
+
+  await prisma.user.upsert({
+    where: { email: "gabriel@gmail.com" },
+    update: {},
+    create: {
+      born_date: new Date("2002-09-01 08:00:00"),
+      email: "gabriel@gmail.com",
+      name: "Gabriel Monteiro",
+      password,
+      Student: {
+        create: {
+          father_name: "Carlos",
+          mother_name: "Marcleide",
+          school_grade: "Segundo Ano",
+          responsible_number: "55991506020"
+        },
+      },
+    },
+  });
+
+  await prisma.user.upsert({
+    where: { email: "everton@gmail.com" },
+    update: {},
+    create: {
+      born_date: new Date("2000-12-25 10:00:00"),
+      email: "everton@gmail.com",
+      name: "Everton Maia",
+      password,
+      Student: {
+        create: {
+          father_name: "Rafael",
+          mother_name: "Leuda",
+          school_grade: "Segundo Ano",
+          responsible_number: "559847562315"
+        }
+      }
     },
   });
 
@@ -49,6 +85,26 @@ module.exports.createUserSeed = async function createUserSeed() {
       password,
       role: Role.ADMIN,
     },
+  });
+
+  await prisma.user.create({
+    data: {
+      born_date: new Date("2012-02-10 09:00:00"),
+      email: "luis@gmail.com",
+      name: "Luis Eduardo",
+      password,
+      role: Role.STUDENT,
+    },
+  });
+
+  await prisma.user.create({
+    data: {
+      born_date: new Date("2010-04-21 10:00:00"),
+      email: "eloa@gmail.com",
+      name: "Eloá",
+      password,
+      role: Role.STUDENT,
+    }
   });
 };
 
