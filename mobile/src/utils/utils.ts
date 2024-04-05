@@ -39,3 +39,25 @@ export function getInitalName(nome: string): string {
 
   return initialsName;
 }
+
+export function getAge(dateString: string) {
+  const today = new Date();
+  const birthDate = new Date(dateString);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  return age;
+}
+
+export const normalizePhoneNumber = (value: string | undefined) => {
+  if (!value) return "";
+
+  return value
+    .replace(/[\D]/g, "")
+    .replace(/(\d{2})(\d)/, "($1) $2")
+    .replace(/(-\d{4})(\d+?)/, "$1");
+};

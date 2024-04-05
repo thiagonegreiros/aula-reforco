@@ -13,6 +13,10 @@ export class StudentHandler {
     return this.studentRepository.findById(id);
   }
 
+  public async findByIdUser(id: number) {
+    return this.studentRepository.findByIdUser(id);
+  }
+
   public async add(data: CreateStudentDto) {
     //TODO: Create a validate user
     //if exists and role is STUDENT

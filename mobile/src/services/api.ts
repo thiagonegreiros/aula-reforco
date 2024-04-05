@@ -7,7 +7,7 @@ const api = axios.create({
 
 api.interceptors.response.use(
   (response) => {
-    if (response.data.status !== undefined && response.data.stataus !== 200) {
+    if (response.data.status !== undefined && response.data.status !== 200) {
       return Promise.reject(new AppError(response.data.message));
     }
 

@@ -22,6 +22,17 @@ export class StudentsRepository {
     });
   }
 
+  async findByIdUser(id_user_student: number) {
+    return prisma.student.findUnique({
+      where: {
+        id_user_student,
+      },
+      include: {
+        user: true,
+      },
+    });
+  }
+
   async findByIdOnlyStudent(id: number) {
     return prisma.student.findUnique({
       where: {

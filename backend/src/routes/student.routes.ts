@@ -20,13 +20,24 @@ studentsRoutes.get(
   },
 );
 
+studentsRoutes.get(
+  "/user/:id_user_student",
+  async ({ params: { id_user_student } }) =>
+    await studentHandler.findByIdUser(id_user_student),
+  {
+    params: t.Object({
+      id_user_student: t.Numeric(),
+    }),
+  },
+);
+
 studentsRoutes.post(
   "/",
   async ({ body }) => {
     try {
       await studentHandler.add(body);
       return {
-        message: "Usuário criado com sucesso.",
+        message: "Aluno(a) criado(a) com sucesso.",
         status: 200,
       };
     } catch (error) {
@@ -38,12 +49,6 @@ studentsRoutes.post(
   },
   {
     body: studentBody,
-    transform({ body }) {
-      // Apply transform to class_time field if needed
-      if (body.class_time && typeof body.class_time === "string") {
-        body.class_time = new Date(body.class_time);
-      }
-    },
   },
 );
 
