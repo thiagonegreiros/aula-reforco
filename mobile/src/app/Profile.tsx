@@ -176,6 +176,7 @@ export function Profile() {
               name="user.born_date"
               render={({ field: { onChange, value } }) => (
                 <Input
+                  label="Idade"
                   editable={false}
                   placeholder="Idade"
                   className="flex-1 mr-2"
@@ -189,6 +190,7 @@ export function Profile() {
               name="student.school_grade"
               render={({ field: { onChange, value } }) => (
                 <Input
+                  label="Escolaridade"
                   placeholder="Escolaridade"
                   className="flex-1 ml-2"
                   onChangeText={onChange}
@@ -202,6 +204,7 @@ export function Profile() {
             name="user.email"
             render={({ field: { onChange, value } }) => (
               <Input
+                label="E-mail"
                 editable={false}
                 placeholder="E-mail"
                 onChangeText={onChange}
@@ -214,6 +217,7 @@ export function Profile() {
             name="student.mother_name"
             render={({ field: { onChange, value } }) => (
               <Input
+                label="Nome da Mãe"
                 placeholder="Nome da Mãe"
                 onChangeText={onChange}
                 value={value}
@@ -225,6 +229,7 @@ export function Profile() {
             name="student.father_name"
             render={({ field: { onChange, value } }) => (
               <Input
+                label="Nome do Pai"
                 placeholder="Nome do Pai"
                 onChangeText={onChange}
                 value={value}
@@ -236,6 +241,7 @@ export function Profile() {
             name="student.student_name"
             render={({ field: { onChange, value } }) => (
               <Input
+                label="Nome do Estudante"
                 placeholder="Nome do Estudante"
                 onChangeText={onChange}
                 value={value}
@@ -247,6 +253,7 @@ export function Profile() {
             name="student.responsible_number"
             render={({ field: { onChange, value } }) => (
               <Input
+                label="Número do Responsável"
                 placeholder="Número do Responsável"
                 onChangeText={onChange}
                 value={value}
@@ -258,6 +265,7 @@ export function Profile() {
             name="user.password"
             render={({ field: { onChange, value } }) => (
               <Input
+                label="Senha"
                 placeholder="Senha"
                 onChangeText={onChange}
                 value={value}
@@ -269,6 +277,7 @@ export function Profile() {
             name="user.repeat_password"
             render={({ field: { onChange, value } }) => (
               <Input
+                label="Repetir a Senha"
                 placeholder="Repita a Senha"
                 onChangeText={onChange}
                 value={value}
