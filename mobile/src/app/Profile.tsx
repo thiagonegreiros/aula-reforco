@@ -12,49 +12,62 @@ import { AppError } from "@/utils/AppError";
 import { api } from "@/services/api";
 import { StudentDto } from "@/dto/StudentDto";
 import { useToast } from "@/components/Toast";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigation } from "@react-navigation/native";
+import { resolver } from "../../metro.config";
+import { UserDto } from "@/dto/UserDto";
+
+type UserProps = {
+  name: string;
+  email: string;
+  born_date: string;
+  password: string;
+  repeat_password: string;
+};
+
+type StudentProps = {
+  school_grade: string;
+  mother_name: string;
+  father_name: string;
+  responsible_number: string;
+  student_name: string;
+};
 
 type FormDataProps = {
-  user: {
-    name: string;
-    email: string;
-    born_date: string;
-    password: string;
-    repeat_password: string;
-  };
-  student: {
-    school_grade: string;
-    mother_name: string;
-    father_name: string;
-    responsible_number: string;
-    student_name: string;
-  };
+  user: UserProps;
+  student: StudentProps;
   old_password: string;
 };
 
 const profileSchema = yup.object({
-  email: yup.string().required("Email obrigatório."),
-  school_grade: yup.string().required("Escolaridade obrigatório."),
-  mother_name: yup.string().required("Nome da Mãe obrigatório."),
-  father_name: yup.string().required("Nome do Pai obrigatório."),
-  responsable_number: yup.string().required("Telefone obrigatório."),
-  password: yup
-    .string()
-    .min(6, "A senha deve possuir no mínimo 6 caracteres.")
-    .nullable()
-    .transform((value) => (!!value ? value : null)),
-  confirm_password: yup
-    .string()
-    .nullable()
-    .transform((value) => (!!value ? value : null))
-    .oneOf([yup.ref("password"), null], "As senhas não coincidem.")
-    .when("password", {
-      is: (field: any) => field,
-      then: yup
-        .string()
-        .nullable()
-        .required("Informe a confirmação da senha.")
-        .transform((value) => (!!value ? value : null)),
-    }),
+  user: yup.object({
+    email: yup.string().required("Email obrigatório."),
+    password: yup
+      .string()
+      .min(6, "A senha deve possuir no mínimo 6 caracteres.")
+      .nullable()
+      .transform((value) => (!!value ? value : null)),
+    repeat_password: yup
+      .string()
+      .oneOf(
+        [yup.ref("password")],
+        ({ path }) => `${path} deve coincidir com a senha.`
+      )
+      .required("Confirmação de senha obrigatória"),
+  }),
+  student: yup.object({
+    school_grade: yup.string().required("Escolaridade obrigatória."),
+    mother_name: yup.string().required("Nome da Mãe obrigatório."),
+    father_name: yup.string().required("Nome do Pai obrigatório."),
+    responsible_number: yup
+      .string()
+      .required("Telefone obrigatório.")
+      .matches(
+        /\(([0-9]{2}|0{1}((x|[0-9]){2}[0-9]{2}))\)\s*[0-9]{3,4}[- ]*[0-9]{4}/,
+        "Favor digitar neste formato: (XX) XXXXXXXXX"
+      ),
+  }),
+  old_password: yup.string(),
 });
 
 export function Profile() {
@@ -62,6 +75,7 @@ export function Profile() {
   const [isLoading, setIsLoading] = useState(false);
   const { user, updateUserProfile } = useAuth();
 
+  const navigation = useNavigation();
   const { toast } = useToast();
 
   const {
@@ -76,13 +90,13 @@ export function Profile() {
         born_date: getAge(user.born_date).toString(),
       },
     },
+    resolver: yupResolver(profileSchema),
   });
 
   async function handleProfileUpdate(data: FormDataProps) {
+    console.log(errors);
     try {
       setIsLoading(true);
-
-      const userUpdated = user;
 
       const studentData = {
         school_grade: data.student.school_grade,
@@ -90,22 +104,28 @@ export function Profile() {
         father_name: data.student.father_name,
         student_name: data.student.student_name,
         responsible_number: data.student.responsible_number,
+        id_user_student: user.id,
       };
 
+      const userData = {
+        id: Number(user.id),
+        name: user.name,
+        password: data.user.password,
+        born_date: String(new Date(user.born_date)),
+        email: user.email,
+        role: user.role,
+      };
+
+      const { password, ...updateUserData } = userData;
+
       if (student) {
-        Object.assign(studentData, {
-          id_user_student: user.id,
-        });
-
-        console.log(studentData);
-
         await api.put(`/student/${student.id}`, studentData);
       } else {
         await api.post("/student", studentData);
       }
 
-      // await api.put("/users", data);
-      //await updateUserProfile(userUpdated);
+      await api.put(`/user/${user.id}`, userData);
+      await updateUserProfile(updateUserData);
 
       toast("Profile atualizado com sucesso.", "success", 4000);
     } catch (error) {
@@ -114,7 +134,7 @@ export function Profile() {
         ? error.message
         : "Não foi possível atualizar o perfil. Tente novamente.";
 
-      console.log(message);
+      console.log(error);
       toast(message, "destructive", 4000);
     } finally {
       setIsLoading(false);
@@ -195,6 +215,7 @@ export function Profile() {
                   className="flex-1 ml-2"
                   onChangeText={onChange}
                   value={value}
+                  errorMessage={errors.student?.school_grade?.message}
                 />
               )}
             />
@@ -221,6 +242,7 @@ export function Profile() {
                 placeholder="Nome da Mãe"
                 onChangeText={onChange}
                 value={value}
+                errorMessage={errors.student?.mother_name?.message}
               />
             )}
           />
@@ -233,6 +255,7 @@ export function Profile() {
                 placeholder="Nome do Pai"
                 onChangeText={onChange}
                 value={value}
+                errorMessage={errors.student?.father_name?.message}
               />
             )}
           />
@@ -245,6 +268,7 @@ export function Profile() {
                 placeholder="Nome do Estudante"
                 onChangeText={onChange}
                 value={value}
+                errorMessage={errors.student?.student_name?.message}
               />
             )}
           />
@@ -257,6 +281,7 @@ export function Profile() {
                 placeholder="Número do Responsável"
                 onChangeText={onChange}
                 value={value}
+                errorMessage={errors.student?.responsible_number?.message}
               />
             )}
           />
@@ -269,18 +294,21 @@ export function Profile() {
                 placeholder="Senha"
                 onChangeText={onChange}
                 value={value}
+                secureTextEntry
+                errorMessage={errors.user?.password?.message}
               />
             )}
           />
           <Controller
             control={control}
             name="user.repeat_password"
-            render={({ field: { onChange, value } }) => (
+            render={({ field: { onChange } }) => (
               <Input
                 label="Repetir a Senha"
                 placeholder="Repita a Senha"
                 onChangeText={onChange}
-                value={value}
+                secureTextEntry
+                errorMessage={errors.user?.repeat_password?.message}
               />
             )}
           />
@@ -297,6 +325,7 @@ export function Profile() {
             label="Cancel"
             variant="destructive"
             className="w-20 ml-2 mt-4"
+            onPress={() => navigation.navigate("home")}
           />
         </View>
       </View>

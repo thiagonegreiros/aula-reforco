@@ -10,6 +10,7 @@ export const studentBody = t.Object({
   responsible_number: t.String(),
   student_name: t.Optional(t.String()),
   id_user_student: t.Number(),
+  school_grade: t.String(),
 });
 
 export const studentBodyUpdate = t.Object({

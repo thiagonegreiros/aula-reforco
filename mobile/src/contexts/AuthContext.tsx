@@ -95,6 +95,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       setIsLoadingUserStorageData(false);
     }
   }
+
   async function updateUserProfile(userUpdated: UserDto) {
     try {
       setUser(userUpdated);
