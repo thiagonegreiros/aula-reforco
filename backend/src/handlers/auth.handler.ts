@@ -44,6 +44,12 @@ export class AuthenticateHandler {
         name: userExists.name,
         role: userExists.role,
       },
+      student: {
+        id: userExists.Student?.id,
+        class_time: userExists.Student?.class_time,
+        school_grade: userExists.Student?.school_grade,
+        days_of_week: userExists.Student?.days_of_week,
+      },
     };
   }
 }

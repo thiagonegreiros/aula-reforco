@@ -17,6 +17,9 @@ export class UsersRepository {
 
   async findByEmail(email: string) {
     return prisma.user.findUnique({
+      include: {
+        Student: true,
+      },
       where: {
         email,
       },
