@@ -94,7 +94,6 @@ export function Profile() {
   });
 
   async function handleProfileUpdate(data: FormDataProps) {
-    console.log(errors);
     try {
       setIsLoading(true);
 

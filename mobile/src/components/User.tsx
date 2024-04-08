@@ -4,7 +4,9 @@ import { useAuth } from "@/hooks/useAuth";
 import { getInitalName } from "@/utils/utils";
 
 export function User() {
-  const { user } = useAuth();
+  const { user, student } = useAuth();
+
+  console.log(student);
 
   return (
     <View className="flex-row justify-between">
@@ -13,7 +15,7 @@ export function User() {
           {user.name}
         </Text>
         <Text className="text-gray-400 text-xs">
-          Classe: Primeiro Ano | Turma: 08h~10h
+          Classe: {student.school_grade} | Turma: {student.class_time}
         </Text>
         <Text className="text-gray-400 text-xs">Seg, Qua, Sex</Text>
       </View>

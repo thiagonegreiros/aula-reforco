@@ -12,6 +12,8 @@ import {
   storageAuthTokenRemove,
   storageAuthTokenSave,
 } from "@/storage/storageAuthToken";
+import { storageStudentSave } from "@/storage/storageStudent";
+import { StudentDtoStorage } from "@/dto/StudentDto";
 
 export type AuthContextDataProps = {
   user: UserDto;
@@ -19,6 +21,8 @@ export type AuthContextDataProps = {
   signIn: (email: string, password: string) => Promise<void>;
   isLoadingUserStorageData: boolean;
   updateUserProfile: (data: UserDto) => Promise<void>;
+  student: StudentDtoStorage;
+  updateStudent: (data: StudentDtoStorage) => Promise<void>;
 };
 
 type AuthContextProviderProps = {
@@ -31,6 +35,7 @@ export const AuthContext = createContext<AuthContextDataProps>(
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState({} as UserDto);
+  const [student, setStudent] = useState({} as StudentDtoStorage);
   const [isLoadingUserStorageData, setIsLoadingUserStorageData] =
     useState(true);
 
@@ -70,6 +75,11 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     try {
       const { data } = await api.post("/auth", { email, password });
 
+      if (data.student) {
+        await storageStudentSave(data.student);
+        setStudent(data.student);
+      }
+
       if (data.user && data.access_token) {
         await storageUserAndTokenSave(data.user, data.access_token);
         userAndTokenUpdate(data.user, data.access_token);
@@ -105,6 +115,15 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     }
   }
 
+  async function updateStudent(student: StudentDtoStorage) {
+    try {
+      setStudent(student);
+      await storageStudentSave(student);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   useEffect(() => {
     loadUserData();
   }, []);
@@ -117,6 +136,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         signIn,
         isLoadingUserStorageData,
         updateUserProfile,
+        student,
+        updateStudent,
       }}
     >
       {children}
