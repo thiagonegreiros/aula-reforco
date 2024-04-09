@@ -35,7 +35,8 @@
     "react-native-svg": "14.1.0",
     "react-native-web": "~0.19.6",
     "tailwind-merge": "^2.2.2",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "expo-checkbox": "~2.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -73,7 +73,7 @@ const profileSchema = yup.object({
 export function Profile() {
   const [student, setStudent] = useState<StudentDto>();
   const [isLoading, setIsLoading] = useState(false);
-  const { user, updateUserProfile } = useAuth();
+  const { user, updateUserProfile, updateStudent } = useAuth();
 
   const navigation = useNavigation();
   const { toast } = useToast();
@@ -119,6 +119,10 @@ export function Profile() {
 
       if (student) {
         await api.put(`/student/${student.id}`, studentData);
+        await updateStudent({
+          id: student?.id,
+          school_grade: student?.school_grade,
+        });
       } else {
         await api.post("/student", studentData);
       }
