@@ -35,6 +35,7 @@ const data = {
 
 export function Schedule() {
   const {
+    getValues,
     control,
     handleSubmit,
     formState: { errors },
@@ -42,9 +43,31 @@ export function Schedule() {
 
   const navigation = useNavigation();
   const [selectedDays, setSelectedDays] = useState<number[]>([]);
+  const [showCheckboxes, setShowCheckboxes] = useState(false);
   const [checkedItems, setCheckedItems] = useState(
     data.daysWeek.map(() => false)
   );
+
+  const handleCheckboxChange = (index: number) => {
+    const maxDays = Number(getValues("qty_days"));
+    const currentChecked = checkedItems[index];
+    const selectedCount = checkedItems.filter((isChecked) => isChecked).length;
+
+    if (!currentChecked && selectedCount >= maxDays) {
+      // Se o número máximo de dias já estiver selecionado, não permita mais seleções
+      return;
+    }
+
+    setCheckedItems((prevItems) => {
+      const updatedItems = [...prevItems];
+      updatedItems[index] = !currentChecked;
+      return updatedItems;
+    });
+  };
+
+  const handleQtyDaysChange = (value: string) => {
+    setShowCheckboxes(!!value);
+  };
 
   async function handleSchedule(data) {
     const parseDaysWeek = [...checkedItems.keys()]
@@ -87,30 +110,29 @@ export function Schedule() {
           render={({ field: { onChange, value } }) => (
             <Input
               placeholder="Quantidade de dias por semana"
-              onChangeText={onChange}
+              onChangeText={(text) => {
+                onChange(text);
+                handleQtyDaysChange(text);
+              }}
               value={value}
             />
           )}
         />
       </View>
 
-      <View>
-        {data.daysWeek.map((day, index) => (
-          <View className="flex flex-row gap-4 mt-4">
-            <Checkbox
-              value={checkedItems[index]}
-              onValueChange={(checked) => {
-                setCheckedItems([
-                  ...checkedItems.slice(0, index),
-                  checked,
-                  ...checkedItems.slice(index + 1),
-                ]);
-              }}
-            />
-            <Text>{day.name}</Text>
-          </View>
-        ))}
-      </View>
+      {showCheckboxes && (
+        <View>
+          {data.daysWeek.map((day, index) => (
+            <View className="flex flex-row gap-4 mt-4" key={day.id}>
+              <Checkbox
+                value={checkedItems[index]}
+                onValueChange={() => handleCheckboxChange(index)}
+              />
+              <Text>{day.name}</Text>
+            </View>
+          ))}
+        </View>
+      )}
 
       <View className="flex flex-row justify-end px-4">
         <Button
