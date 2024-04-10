@@ -64,6 +64,7 @@ studentsRoutes.put(
         student_name: body.student_name,
         class_time: body.class_time,
         qty_days_peer_week: body.qty_days_peer_week,
+        days_of_week: body.days_of_week,
         active: body.active,
         school_grade: body.school_grade,
         id_user_student: body.id_user_student,
@@ -84,11 +85,6 @@ studentsRoutes.put(
   },
   {
     body: studentBodyUpdate,
-    transform({ body }) {
-      if (body.class_time && typeof body.class_time === "string") {
-        body.class_time = new Date(body.class_time);
-      }
-    },
   },
 );
 

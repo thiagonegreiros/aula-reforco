@@ -24,20 +24,20 @@ model User {
 }
 
 model Student {
-  id                 Int       @id @default(autoincrement())
+  id                 Int      @id @default(autoincrement())
   father_name        String
   mother_name        String
   responsible_number String
   student_name       String?
-  class_time         DateTime?
+  class_time         String?
   qty_days_peer_week Int?
-  active             Boolean   @default(true)
+  active             Boolean  @default(true)
   school_grade       String?
   days_of_week       String?
-  created_at         DateTime  @default(now())
-  updated_at         DateTime  @updatedAt
-  id_user_student    Int       @unique
-  user               User      @relation(fields: [id_user_student], references: [id])
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+  id_user_student    Int      @unique
+  user               User     @relation(fields: [id_user_student], references: [id])
 
   @@map("student")
 }
