@@ -71,7 +71,6 @@ export function SignUp() {
 
       toast("Usuário cadastrado com sucesso.", "success", 4000);
     } catch (error) {
-      console.error("dentro do error: ", error);
       setIsLoading(false);
       const isAppError = error instanceof AppError;
       const message = isAppError

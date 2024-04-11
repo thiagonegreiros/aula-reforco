@@ -12,7 +12,10 @@ import {
   storageAuthTokenRemove,
   storageAuthTokenSave,
 } from "@/storage/storageAuthToken";
-import { storageStudentSave } from "@/storage/storageStudent";
+import {
+  storageStudentGet,
+  storageStudentSave,
+} from "@/storage/storageStudent";
 import { StudentDtoStorage } from "@/dto/StudentDto";
 
 export type AuthContextDataProps = {
@@ -95,6 +98,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
       const userLogged = await storageUserGet();
       const token = await storageAuthTokenGet();
+      const student = await storageStudentGet();
+
+      if (student) setStudent(student);
 
       if (token && userLogged) {
         userAndTokenUpdate(userLogged, token);

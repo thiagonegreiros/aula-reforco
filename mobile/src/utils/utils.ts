@@ -1,3 +1,5 @@
+import { CLASS_TIME, DAYS_WEEK } from "./constants";
+
 export function formatDate(timestamp: string): string {
   const dateObject = new Date(timestamp);
   const day = dateObject.getDate().toString().padStart(2, "0");
@@ -61,3 +63,17 @@ export const normalizePhoneNumber = (value: string | undefined) => {
     .replace(/(\d{2})(\d)/, "($1) $2")
     .replace(/(-\d{4})(\d+?)/, "$1");
 };
+
+export function getClassTimeById(id: number) {
+  const classObj = CLASS_TIME.find((item) => item.id === id);
+  return classObj ? classObj.name : null;
+}
+
+export function getShortWeekdayNames(idsString: string) {
+  if (!idsString) return "";
+
+  const ids = idsString.split(",").map((id) => parseInt(id.trim(), 10));
+  const weekdays = DAYS_WEEK.filter((day) => ids.includes(day.id));
+  const shortNames = weekdays.map((day) => day.name.slice(0, 3));
+  return shortNames.join(", ");
+}

@@ -1,11 +1,14 @@
 import { Text, View } from "react-native";
 import { Avatar, AvatarFallback, AvatarImage } from "./Avatar";
 import { useAuth } from "@/hooks/useAuth";
-import { getInitalName } from "@/utils/utils";
+import {
+  getClassTimeById,
+  getInitalName,
+  getShortWeekdayNames,
+} from "@/utils/utils";
 
 export function User() {
   const { user, student } = useAuth();
-
   console.log(student);
 
   return (
@@ -15,9 +18,12 @@ export function User() {
           {user.name}
         </Text>
         <Text className="text-gray-400 text-xs">
-          Classe: {student.school_grade} | Turma: {student.class_time}
+          Classe: {student.school_grade} | Turma:{" "}
+          {getClassTimeById(Number(student.class_time))}
         </Text>
-        <Text className="text-gray-400 text-xs">Seg, Qua, Sex</Text>
+        <Text className="text-gray-400 text-xs">
+          {getShortWeekdayNames(student.days_of_week)}
+        </Text>
       </View>
 
       <Avatar className="w-20 h-20 mt-2">

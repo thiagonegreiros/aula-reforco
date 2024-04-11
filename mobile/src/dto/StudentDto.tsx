@@ -12,5 +12,5 @@ export type StudentDtoStorage = {
   id: number;
   class_time?: string;
   school_grade: string;
-  days_of_week?: number;
+  days_of_week?: string;
 };

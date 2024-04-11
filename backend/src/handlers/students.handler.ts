@@ -43,6 +43,7 @@ export class StudentHandler {
       qty_days_peer_week: data.qty_days_peer_week,
       active: data.active,
       school_grade: data.school_grade,
+      days_of_week: data.days_of_week,
     });
 
     return this.studentRepository.update(student);
