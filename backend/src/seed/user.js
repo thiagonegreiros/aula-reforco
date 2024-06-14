@@ -1,4 +1,5 @@
-const { PrismaClient, Role } = require("@prisma/client");
+import { PrismaClient, Role } from "@prisma/client";
+import { faker } from "@faker-js/faker";
 const prisma = new PrismaClient();
 
 module.exports.createUserSeed = async function createUserSeed() {
@@ -28,7 +29,7 @@ module.exports.createUserSeed = async function createUserSeed() {
     },
   });
 
-  await prisma.user.upsert({
+  /* await prisma.user.upsert({
     where: { email: "gabriel@gmail.com" },
     update: {},
     create: {
@@ -41,7 +42,7 @@ module.exports.createUserSeed = async function createUserSeed() {
           father_name: "Carlos",
           mother_name: "Marcleide",
           school_grade: "Segundo Ano",
-          responsible_number: "55991506020"
+          responsible_number: "55991506020",
         },
       },
     },
@@ -60,9 +61,9 @@ module.exports.createUserSeed = async function createUserSeed() {
           father_name: "Rafael",
           mother_name: "Leuda",
           school_grade: "Segundo Ano",
-          responsible_number: "559847562315"
-        }
-      }
+          responsible_number: "559847562315",
+        },
+      },
     },
   });
 
@@ -87,6 +88,8 @@ module.exports.createUserSeed = async function createUserSeed() {
     },
   });
 
+
+
   await prisma.user.create({
     data: {
       born_date: new Date("2012-02-10 09:00:00"),
@@ -104,8 +107,8 @@ module.exports.createUserSeed = async function createUserSeed() {
       name: "Eloá",
       password,
       role: Role.STUDENT,
-    }
-  });
+    },
+  }); */
 };
 
 async function destroy() {

@@ -8,6 +8,7 @@ authRoutes.post(
   "/",
   async ({ body }) => {
     try {
+      console.log(body);
       return authHandler.authenticate(body);
     } catch (error) {
       return {

@@ -4,4 +4,5 @@ export const SKILLS = [
   { name: "História", bgColor: "bg-sky-500" },
   { name: "Geografia", bgColor: "bg-emerald-500" },
   { name: "Física", bgColor: "bg-indigo-500" },
+  { name: "Ciência", bgColor: "bg-red-500" },
 ];
