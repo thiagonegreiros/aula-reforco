@@ -12,7 +12,6 @@ import Checkbox from "expo-checkbox";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Text, View } from "react-native";
-import { SlideInDown } from "react-native-reanimated";
 
 //TODO: Validade with fill the profile fields
 //TODO: Block button with no fill profile fields
@@ -76,6 +75,7 @@ export function Schedule() {
         id: student?.id,
         school_grade: student?.school_grade,
         days_of_week: studentUpdate.days_of_week,
+        class_time: studentUpdate.class_time,
       });
 
       toast("Agendamento realizado com sucesso.", "success", 4000);
@@ -123,6 +123,7 @@ export function Schedule() {
             <Input
               label="Quantidade de dias por semana"
               placeholder="Digite a quantidade de dias"
+              keyboardType="numeric"
               onChangeText={(text) => {
                 onChange(text);
                 handleQtyDaysChange(text);

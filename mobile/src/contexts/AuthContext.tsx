@@ -123,6 +123,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   async function updateStudent(student: StudentDtoStorage) {
     try {
+      console.log("Schedule update: ", student);
+
       setStudent(student);
       await storageStudentSave(student);
     } catch (error) {
